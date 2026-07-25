@@ -387,7 +387,7 @@
     <!-- พื้นหลัง -->
     <div class="background-overlay"></div>
 
-    <!-- Background Audio (ซิงค์เวลาเล่นต่อเนื่องจากหน้าหลักผ่าน localStorage) -->
+    <!-- Background Audio -->
     <audio id="bgMusic" loop>
         <source src="your-music-file.mp3" type="audio/mp3">
     </audio>
@@ -398,14 +398,13 @@
         <div class="header-section">
             <div class="title-group">
                 <h1 class="main-title">DERNYOUNGSAY</h1>
-                <div class="member-count"><span>37</span> MEMBERS</div>
+                <div class="member-count"><span>40</span> MEMBERS</div>
             </div>
             <div class="top-controls">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Search members..." onkeyup="searchMembers()">
                 </div>
-                <!-- เปลี่ยนลิงก์ BACK กลับไปที่หน้าหลัก dernyoungsay.xyz -->
                 <a href="https://dernyoungsay.xyz" class="back-btn">
                     <i class="fas fa-arrow-left"></i> BACK
                 </a>
@@ -484,7 +483,7 @@
         <div class="category-section member">
             <div class="category-header">
                 <div class="category-title">MEMBER</div>
-                <div class="category-count"><span>31</span> MEMBERS</div>
+                <div class="category-count"><span>34</span> MEMBERS</div>
             </div>
             <div class="member-grid">
                 <div class="member-card" data-name="tim dernyoungsay">
@@ -749,68 +748,37 @@
                             <span class="member-role">MEMBER</span>
                         </div>
                     </div>
-                    <a href="https://www.facebook.com/profile.php?id=61583563406342" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61583563401297" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
-                <div class="member-card" data-name="vega dernyoungsay">
+                <!-- เพิ่มรายชื่อใหม่ที่เพิ่มเข้ามา -->
+                <div class="member-card" data-name="zigar dernyoungsay">
                     <div class="member-info">
                         <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Vega Dernyoungsay">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Zigar Dernyoungsay">
                         </div>
                         <div class="member-details">
-                            <span class="member-name">Vega Dernyoungsay</span>
+                            <span class="member-name">Zigar Dernyoungsay</span>
                             <span class="member-role">MEMBER</span>
                         </div>
                     </div>
-                    <a href="https://www.facebook.com/share/1JTc7WDJpp/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61580720331941" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="kingset dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Kingset Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Kingset Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=61562300212561" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <script>
-        // ระบบค้นหารายชื่อสมาชิก
-        function searchMembers() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.member-card');
-
-            cards.forEach(card => {
-                let name = card.getAttribute('data-name');
-                if (name.includes(input)) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
-        // ระบบเล่นเพลงและซิงค์เวลาต่อเนื่องจากหน้าหลัก (localStorage)
-        document.addEventListener("DOMContentLoaded", function () {
-            let music = document.getElementById("bgMusic");
-
-            // ดึงเวลาล่าสุดที่บันทึกไว้จากหน้าก่อนหน้า
-            let savedTime = localStorage.getItem("bgMusicTime");
-            if (savedTime) {
-                music.currentTime = parseFloat(savedTime);
-            }
-
-            // พยายามเล่นเพลงอัตโนมัติ
-            music.play().catch(error => {
-                console.log("Autoplay was prevented. Waiting for user interaction.");
-            });
-
-            // บันทึกเวลาเพลงปัจจุบันทุกๆ วินาที
-            setInterval(() => {
-                if (!music.paused) {
-                    localStorage.setItem("bgMusicTime", music.currentTime);
-                }
-            }, 1000);
-
-            // บันทึกเวลาเมื่อผู้ใช้กดออกจากหน้าเว็บหรือเปลี่ยนหน้า
-            window.addEventListener("beforeunload", () => {
-                localStorage.setItem("bgMusicTime", music.currentTime);
-            });
-        });
-    </script>
 </body>
 </html>
