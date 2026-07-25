@@ -1144,7 +1144,9 @@
             let cards = document.querySelectorAll('.member-card');
 
             cards.forEach(card => {
-                let name = card.getAttribute('data-name');
+                let nameElement = card.querySelector('.member-name');
+                let name = nameElement ? nameElement.textContent.toLowerCase() : '';
+                
                 if (name.includes(input)) {
                     card.style.display = "flex";
                 } else {
@@ -1165,5 +1167,24 @@
             background-color: #0b0b0e;
         }
     </style>
+    <style>
+    /* 1. ทำให้การเลื่อนหน้าเว็บ (Scroll) ทั้งหมดมีความ Smooth */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* 2. เพิ่มอนิเมชันความ Smooth ให้กับการ์ดสมาชิกเวลาแสดง/ซ่อน */
+    .member-card {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .member-card.is-hidden {
+        display: none !important;
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+</style>
 </head>
 </html>
