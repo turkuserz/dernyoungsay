@@ -375,7 +375,7 @@
             }
             .main-title {
                 font-size: 2.5rem;
-            }
+                }
             .member-grid {
                 grid-template-columns: 1fr;
             }
@@ -387,7 +387,7 @@
     <!-- พื้นหลัง -->
     <div class="background-overlay"></div>
 
-    <!-- Background Audio (Autoplay, Loop, Synchronized state via localStorage) -->
+    <!-- Background Audio (พร้อมซิงค์เวลาผ่าน localStorage) -->
     <audio id="bgMusic" loop>
         <source src="your-music-file.mp3" type="audio/mp3">
     </audio>
@@ -760,79 +760,15 @@
                             <span class="member-role">MEMBER</span>
                         </div>
                     </div>
-                    <a href="https://www.facebook.com/banchamek.banchamek.banchamek.2025?locale=th_TH" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                </div>
-                <div class="member-card" data-name="aim dernyoungsay">
-                    <div class="member-info">
-                        <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Aim Dernyoungsay">
-                        </div>
-                        <div class="member-details">
-                            <span class="member-name">Aim Dernyoungsay</span>
-                            <span class="member-role">MEMBER</span>
-                        </div>
-                    </div>
-                    <a href="https://www.facebook.com/share/18rYdHaxYE/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                </div>
-                <!-- เพิ่ม Member ใหม่ 2 คน -->
-                <div class="member-card" data-name="tim dernyoungsay">
-                    <div class="member-info">
-                        <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Tim Dernyoungsay">
-                        </div>
-                        <div class="member-details">
-                            <span class="member-name">Tim Dernyoungsay</span>
-                            <span class="member-role">MEMBER</span>
-                        </div>
-                    </div>
-                    <a href="https://www.facebook.com/tim.youngbxy" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                </div>
-                <div class="member-card" data-name="ronx dernyoungsay">
-                    <div class="member-info">
-                        <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Ronx Dernyoungsay">
-                        </div>
-                        <div class="member-details">
-                            <span class="member-name">Ronx Dernyoungsay</span>
-                            <span class="member-role">MEMBER</span>
-                        </div>
-                    </div>
-                    <a href="https://www.facebook.com/rxnnylesbr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/share/12AG8cQJ5Lw/?mibextid=` target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // ระบบซิงค์เพลงพื้นหลังเล่นต่อเนื่องจากหน้าหลักโดยไม่มีปุ่มควบคุม
-        document.addEventListener("DOMContentLoaded", function() {
-            const music = document.getElementById("bgMusic");
-            
-            // ดึงค่าเวลาเล่นเพลงล่าสุดจาก localStorage
-            let savedTime = localStorage.getItem("bgMusicTime");
-            if (savedTime) {
-                music.currentTime = parseFloat(savedTime);
-            }
-
-            // พยายามเล่นเพลงอัตโนมัติ
-            music.play().catch(error => {
-                console.log("Autoplay was prevented, waiting for interaction.");
-            });
-
-            // บันทึกตำแหน่งเวลาเพลงทุกๆ วินาที
-            setInterval(() => {
-                if (!music.paused) {
-                    localStorage.setItem("bgMusicTime", music.currentTime);
-                }
-            }, 1000);
-
-            // บันทึกก่อนเปลี่ยนหน้า
-            window.addEventListener("beforeunload", () => {
-                localStorage.setItem("bgMusicTime", music.currentTime);
-            });
-        });
-
-        // ฟังก์ชันค้นหา Member
+        // ระบบค้นหารายชื่อสมาชิก
         function searchMembers() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.querySelectorAll('.member-card');
@@ -846,6 +782,52 @@
                 }
             });
         }
+
+        // ระบบควบคุมเพลงต่อเนื่องผ่าน localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            const music = document.getElementById("bgMusic");
+
+            // ดึงเวลาเพลงที่เล่นค้างไว้จากหน้าก่อนหน้า
+            let savedTime = localStorage.getItem("bgMusicTime");
+            let isPlaying = localStorage.getItem("bgMusicPlaying");
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            if (isPlaying === "true") {
+                music.play().catch(() => {
+                    // ป้องกันกรณี Browser บล็อก Autoplay ถ้าผู้ใช้ยังไม่เคยคลิกหน้าจอ
+                    document.addEventListener("click", function() {
+                        music.play();
+                    }, { once: true });
+                });
+            } else {
+                // ถ้ายังไม่เคยเล่น ให้เล่นอัตโนมัติและบันทึกสถานะ
+                music.play().then(() => {
+                    localStorage.setItem("bgMusicPlaying", "true");
+                }).catch(() => {
+                    document.addEventListener("click", function() {
+                        music.play();
+                        localStorage.setItem("bgMusicPlaying", "true");
+                    }, { once: true });
+                });
+            }
+
+            // บันทึกเวลาปัจจุบันของเพลงทุกๆ วินาที
+            setInterval(function() {
+                if (!music.paused) {
+                    localStorage.setItem("bgMusicTime", music.currentTime);
+                    localStorage.setItem("bgMusicPlaying", "true");
+                }
+            }, 500);
+
+            // บันทึกเวลาก่อนเปลี่ยนหน้าหรือปิดหน้าเว็บ
+            window.addEventListener("beforeunload", function() {
+                localStorage.setItem("bgMusicTime", music.currentTime);
+                localStorage.setItem("bgMusicPlaying", !music.paused);
+            });
+        });
     </script>
 </body>
 </html>
