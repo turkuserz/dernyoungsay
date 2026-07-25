@@ -375,7 +375,7 @@
             }
             .main-title {
                 font-size: 2.5rem;
-                }
+            }
             .member-grid {
                 grid-template-columns: 1fr;
             }
@@ -387,7 +387,7 @@
     <!-- พื้นหลัง -->
     <div class="background-overlay"></div>
 
-    <!-- Background Audio (พร้อมซิงค์เวลาผ่าน localStorage) -->
+    <!-- Background Audio (ซิงค์เวลาเล่นต่อเนื่องจากหน้าหลักผ่าน localStorage) -->
     <audio id="bgMusic" loop>
         <source src="your-music-file.mp3" type="audio/mp3">
     </audio>
@@ -398,14 +398,14 @@
         <div class="header-section">
             <div class="title-group">
                 <h1 class="main-title">DERNYOUNGSAY</h1>
-                <div class="member-count"><span>36</span> MEMBERS</div>
+                <div class="member-count"><span>37</span> MEMBERS</div>
             </div>
             <div class="top-controls">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Search members..." onkeyup="searchMembers()">
                 </div>
-                <a href="index.html" class="back-btn">
+                <a href="https://dernyoungsay.xyz/member" class="back-btn">
                     <i class="fas fa-arrow-left"></i> BACK
                 </a>
             </div>
@@ -418,7 +418,7 @@
                 <div class="category-count"><span>1</span> MEMBER</div>
             </div>
             <div class="member-grid">
-                <div class="member-card" data-name="Nineny dernyoungsay">
+                <div class="member-card" data-name="nineny dernyoungsay">
                     <div class="member-info">
                         <div class="member-avatar">
                             <img src="https://img2.pic.in.th/DYs.png" alt="Nineny Dernyoungsay">
@@ -483,9 +483,22 @@
         <div class="category-section member">
             <div class="category-header">
                 <div class="category-title">MEMBER</div>
-                <div class="category-count"><span>30</span> MEMBERS</div>
+                <div class="category-count"><span>31</span> MEMBERS</div>
             </div>
             <div class="member-grid">
+                <!-- เพิ่ม Tim Dernyoungsay ที่นี่ -->
+                <div class="member-card" data-name="tim dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Tim Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Tim Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/tim.youngbxy" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
                 <div class="member-card" data-name="turk dernyoungsay">
                     <div class="member-info">
                         <div class="member-avatar">
@@ -750,18 +763,6 @@
                     </div>
                     <a href="https://www.facebook.com/share/1JTc7WDJpp/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
-                <div class="member-card" data-name="jim dernyoungsay">
-                    <div class="member-info">
-                        <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Jim Dernyoungsay">
-                        </div>
-                        <div class="member-details">
-                            <span class="member-name">Jim Dernyoungsay</span>
-                            <span class="member-role">MEMBER</span>
-                        </div>
-                    </div>
-                    <a href="https://www.facebook.com/share/12AG8cQJ5Lw/?mibextid=` target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                </div>
             </div>
         </div>
 
@@ -774,7 +775,7 @@
             let cards = document.querySelectorAll('.member-card');
 
             cards.forEach(card => {
-                let name = card.getAttribute('data-name').toLowerCase();
+                let name = card.getAttribute('data-name');
                 if (name.includes(input)) {
                     card.style.display = "flex";
                 } else {
@@ -783,49 +784,31 @@
             });
         }
 
-        // ระบบควบคุมเพลงต่อเนื่องผ่าน localStorage
-        document.addEventListener("DOMContentLoaded", function() {
-            const music = document.getElementById("bgMusic");
+        // ระบบเล่นเพลงและซิงค์เวลาต่อเนื่องจากหน้าหลัก (localStorage)
+        document.addEventListener("DOMContentLoaded", function () {
+            let music = document.getElementById("bgMusic");
 
-            // ดึงเวลาเพลงที่เล่นค้างไว้จากหน้าก่อนหน้า
+            // ดึงเวลาล่าสุดที่บันทึกไว้จากหน้าก่อนหน้า
             let savedTime = localStorage.getItem("bgMusicTime");
-            let isPlaying = localStorage.getItem("bgMusicPlaying");
-
             if (savedTime) {
                 music.currentTime = parseFloat(savedTime);
             }
 
-            if (isPlaying === "true") {
-                music.play().catch(() => {
-                    // ป้องกันกรณี Browser บล็อก Autoplay ถ้าผู้ใช้ยังไม่เคยคลิกหน้าจอ
-                    document.addEventListener("click", function() {
-                        music.play();
-                    }, { once: true });
-                });
-            } else {
-                // ถ้ายังไม่เคยเล่น ให้เล่นอัตโนมัติและบันทึกสถานะ
-                music.play().then(() => {
-                    localStorage.setItem("bgMusicPlaying", "true");
-                }).catch(() => {
-                    document.addEventListener("click", function() {
-                        music.play();
-                        localStorage.setItem("bgMusicPlaying", "true");
-                    }, { once: true });
-                });
-            }
+            // พยายามเล่นเพลงอัตโนมัติ
+            music.play().catch(error => {
+                console.log("Autoplay was prevented. Waiting for user interaction.");
+            });
 
-            // บันทึกเวลาปัจจุบันของเพลงทุกๆ วินาที
-            setInterval(function() {
+            // บันทึกเวลาเพลงปัจจุบันทุกๆ วินาที
+            setInterval(() => {
                 if (!music.paused) {
                     localStorage.setItem("bgMusicTime", music.currentTime);
-                    localStorage.setItem("bgMusicPlaying", "true");
                 }
-            }, 500);
+            }, 1000);
 
-            // บันทึกเวลาก่อนเปลี่ยนหน้าหรือปิดหน้าเว็บ
-            window.addEventListener("beforeunload", function() {
+            // บันทึกเวลาเมื่อผู้ใช้กดออกจากหน้าเว็บหรือเปลี่ยนหน้า
+            window.addEventListener("beforeunload", () => {
                 localStorage.setItem("bgMusicTime", music.currentTime);
-                localStorage.setItem("bgMusicPlaying", !music.paused);
             });
         });
     </script>
