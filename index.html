@@ -7,6 +7,15 @@
     <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/DYs.png">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- สคริปต์ตรวจสอบและซ่อน /index.html จาก URL ทันทีที่โหลดหน้าเว็บ -->
+    <script>
+        if (window.location.pathname.endsWith("/index.html")) {
+            let cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname.replace("/index.html", "/");
+            window.history.replaceState(null, "", cleanUrl);
+        }
+    </script>
+
     <style>
         /* --- SELECTION --- */
         ::selection {
