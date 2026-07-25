@@ -89,8 +89,7 @@
             width: 100%;
             height: 100%;
             background-color: #050507;
-            /* เปลี่ยนชื่อ 'bg.png' เป็นชื่อไฟล์รูปภาพพื้นหลังของคุณที่อยู่ในโฟลเดอร์เดียวกัน */
-            background-image: url('bg.png'), url('https://img1.pic.in.th/images/sszxcxcs.png');
+            background-image: url('https://img1.pic.in.th/images/sszxcxcs.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -378,6 +377,14 @@
             text-transform: uppercase;
         }
 
+        #youtube-container {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
         @media (max-width: 768px) {
             .main-title {
                 font-size: 3rem;
@@ -439,59 +446,87 @@
     <!-- เครื่องเล่นเพลง Widget มุมซ้ายล่าง -->
     <div class="music-widget" id="musicWidget" onclick="togglePlayMusic()">
         <div class="music-album-cover">
-            <img src="https://img.youtube.com/vi/Ahha3Cqe_fk/hqdefault.jpg" alt="Album Cover">
+            <img src="https://img.youtube.com/vi/-BjZmE2gtdo/hqdefault.jpg" alt="Album Cover">
         </div>
         <div class="music-details">
             <div class="music-title-wrapper">
-                <div class="music-title">THE ONE THAT GOT AWAY</div>
+                <div class="music-title">AUDIO TRACK</div>
             </div>
-            <div class="music-artist">KATY PERRY</div>
+            <div class="music-artist">DERNYOUNGSAY MUSIC</div>
         </div>
     </div>
 
-    <!-- Audio Element (เปลี่ยน src เป็นไฟล์เพลงของคุณเองในเครื่อง เช่น song.mp3) -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-epic.mp3" type="audio/mpeg">
-    </audio>
+    <!-- YouTube Iframe API Container -->
+    <div id="youtube-container">
+        <div id="hidden-youtube-player"></div>
+    </div>
 
     <script>
-        var music = document.getElementById('bgMusic');
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
         var widget = document.getElementById('musicWidget');
+        var isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('hidden-youtube-player', {
+                height: '1',
+                width: '1',
+                videoId: '-BjZmE2gtdo',
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': '-BjZmE2gtdo'
+                },
+                events: {
+                    'onReady': function(event) {
+                        event.target.playVideo();
+                        event.target.unMute();
+                        isPlaying = true;
+                        widget.classList.add('playing');
+                    },
+                    'onStateChange': function(event) {
+                        if (event.data === YT.PlayerState.PLAYING) {
+                            isPlaying = true;
+                            widget.classList.add('playing');
+                        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                            isPlaying = false;
+                            widget.classList.remove('playing');
+                        }
+                    }
+                }
+            });
+        }
 
         function togglePlayMusic() {
-            if (music.paused) {
-                music.play();
-                widget.classList.add('playing');
-            } else {
-                music.pause();
-                widget.classList.remove('playing');
+            if (player && typeof player.getPlayerState === 'function') {
+                var state = player.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                    isPlaying = false;
+                    widget.classList.remove('playing');
+                } else {
+                    player.playVideo();
+                    isPlaying = true;
+                    widget.classList.add('playing');
+                }
             }
         }
 
-        // พยายามสั่งเล่นเพลงทันทีที่โหลดหน้าเว็บ
-        window.addEventListener('DOMContentLoaded', function() {
-            music.volume = 0.8;
-            var playPromise = music.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(function() {
-                    widget.classList.add('playing');
-                }).catch(function(error) {
-                    // ถ้าเบราว์เซอร์บล็อกการเล่นอัตโนมัติ จะเล่นทันทีเมื่อมีการคลิกหน้าจอครั้งแรก
-                    console.log("Autoplay blocked, waiting for user interaction.");
-                });
-            }
-        });
-
-        // ดักจับการคลิก/เลื่อนเมาส์ครั้งแรกเพื่อเล่นเพลงอัตโนมัติหากโดนเบราว์เซอร์บล็อก
-        ['click', 'keydown', 'touchstart'].forEach(function(evt) {
-            window.addEventListener(evt, function() {
-                if (music.paused) {
-                    music.play();
+        // ดักจับการคลิกหน้าจอครั้งแรกเพื่อบังคับเล่นเพลงอัตโนมัติหากเบราว์เซอร์บล็อกนโยบาย Autoplay
+        document.body.addEventListener('click', function(e) {
+            if (!widget.contains(e.target)) {
+                if (player && typeof player.playVideo === 'function' && !isPlaying) {
+                    player.playVideo();
+                    isPlaying = true;
                     widget.classList.add('playing');
                 }
-            }, { once: true });
-        });
+            }
+        }, { once: true });
     </script>
 
 </body>
