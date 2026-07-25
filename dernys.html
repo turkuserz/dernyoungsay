@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="th">
+<!-- saved from url=(0028)https://www.dernyoungsay.xyz/ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERNYOUNGSAY</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/DYs.png">
+    <!-- นำเข้าฟอนต์ Google Fonts (Anton และ Outfit) -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- SELECTION --- */
+        ::selection {
+            background: #555555;
+            color: #ffffff;
+        }
+        ::-moz-selection {
+            background: #555555;
+            color: #ffffff;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Outfit', sans-serif;
+            color: #e0e0e0;
+            overflow: hidden;
+            background-color: #050507;
+        }
+
+        /* --- SCREEN HUD CORNER BORDERS --- */
+        .hud-border {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            border: 25px solid transparent;
+            opacity: 0;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hud-border::before,
+        .hud-border::after,
+        .hud-corner-br {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-color: rgba(255, 255, 255, 0.4);
+            border-style: solid;
+        }
+
+        .hud-border::before {
+            top: 20px;
+            left: 20px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .hud-border::after {
+            top: 20px;
+            right: 20px;
+            border-width: 2px 2px 0 0;
+        }
+
+        .hud-corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050507;
+            /* เปลี่ยนชื่อ 'bg.png' เป็นชื่อไฟล์รูปภาพพื้นหลังของคุณที่อยู่ในโฟลเดอร์เดียวกัน */
+            background-image: url('bg.png'), url('https://img1.pic.in.th/images/sszxcxcs.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.25) contrast(1.15);
+            z-index: -1;
+            transform: scale(1.05);
+            opacity: 0;
+            animation: bgAppear 0.8s ease-out forwards;
+        }
+
+        @keyframes bgAppear {
+            0% { opacity: 0; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- MAIN CONTENT CONTAINER --- */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        /* --- ANIMATION CLASS --- */
+        .animate-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* --- LOGO --- */
+        .logo-img {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 35px;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2));
+            animation-delay: 0.1s;
+        }
+
+        /* --- TITLE & SUBTITLE WRAPPER --- */
+        .title-wrapper {
+            margin-bottom: 45px;
+        }
+
+        .main-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 5rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            margin-bottom: 0;
+            color: #ffffff;
+            text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            line-height: 1;
+            animation-delay: 0.2s;
+        }
+
+        .sub-subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            color: #8c8c94;
+            font-weight: 500;
+            text-transform: uppercase;
+            animation-delay: 0.3s;
+        }
+
+        .sub-subtitle::before,
+        .sub-subtitle::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .member-button-container {
+            display: flex;
+            justify-content: center;
+            animation-delay: 0.4s;
+        }
+
+        .member-button {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            text-decoration: none;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .member-button:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
+        }
+
+        .member-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .member-icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .member-button:hover .member-icon {
+            transform: scale(1.15);
+        }
+
+        .member-text {
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .footer-text {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: #8c8c94;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            z-index: 2;
+            white-space: nowrap;
+            opacity: 0;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        .footer-text a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: #b0b0b8;
+            text-decoration: underline;
+        }
+
+        /* --- MUSIC WIDGET --- */
+        .music-widget {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px 8px 8px;
+            background: rgba(18, 18, 22, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: #ffffff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            z-index: 2;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideRightFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes slideRightFade {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .music-widget:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(25, 25, 30, 0.95);
+            transform: translateY(-2px);
+        }
+
+        .music-album-cover {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .music-album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .music-widget:hover .music-album-cover img {
+            transform: scale(1.08);
+        }
+
+        .music-album-cover::after {
+            content: '\f04b';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .music-widget.playing .music-album-cover::after {
+            content: '\f04c';
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .music-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            white-space: nowrap;
+            max-width: 170px;
+        }
+
+        .music-title-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .music-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            display: inline-block;
+        }
+
+        .music-widget.playing .music-title {
+            animation: marquee 8s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .music-artist {
+            font-size: 0.65rem;
+            color: #9c9c9f;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+                letter-spacing: 1px;
+            }
+            .sub-subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 2px;
+            }
+            .logo-img {
+                max-width: 140px;
+            }
+            .music-widget {
+                bottom: 20px;
+                left: 20px;
+            }
+            .hud-border {
+                border-width: 10px;
+            }
+            .footer-text {
+                font-size: 0.55rem;
+                letter-spacing: 1.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ขอบมุม HUD -->
+    <div class="hud-border">
+        <div class="hud-corner-br"></div>
+    </div>
+
+    <!-- พื้นหลัง -->
+    <div class="background-overlay"></div>
+
+    <!-- เนื้อหาหลัก -->
+    <div class="main-container">
+        <!-- โลโก้ตรงกลาง -->
+        <img src="https://img1.pic.in.th/images/DYs.png" alt="Logo" class="logo-img animate-up">
+
+        <div class="title-wrapper">
+            <h1 class="main-title animate-up">DERNYOUNGSAY</h1>
+            <div class="sub-subtitle animate-up">EVERY KNOW I'DONT CRY FOR GIRL</div>
+        </div>
+
+        <!-- ปุ่ม MEMBER -->
+        <div class="member-button-container animate-up">
+            <a href="URL_YOUR_MEMBERS_PAGE.html" class="member-button">
+                <i class="fas fa-users member-icon"></i>
+                <span class="member-text">MEMBERS</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ส่วนท้าย -->
+    <div class="footer-text">©2026 ORIGINAL DESIGN BY <a href="https://discord.gg/PrR76kP6nE" target="_blank">DERNYOUNGSAY</a></div>
+
+    <!-- เครื่องเล่นเพลง Widget มุมซ้ายล่าง -->
+    <div class="music-widget" id="musicWidget" onclick="togglePlayMusic()">
+        <div class="music-album-cover">
+            <img src="https://img.youtube.com/vi/Ahha3Cqe_fk/hqdefault.jpg" alt="Album Cover">
+        </div>
+        <div class="music-details">
+            <div class="music-title-wrapper">
+                <div class="music-title">THE ONE THAT GOT AWAY</div>
+            </div>
+            <div class="music-artist">KATY PERRY</div>
+        </div>
+    </div>
+
+    <!-- Audio Element (เปลี่ยน src เป็นไฟล์เพลงของคุณเองในเครื่อง เช่น song.mp3) -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-epic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        var music = document.getElementById('bgMusic');
+        var widget = document.getElementById('musicWidget');
+
+        function togglePlayMusic() {
+            if (music.paused) {
+                music.play();
+                widget.classList.add('playing');
+            } else {
+                music.pause();
+                widget.classList.remove('playing');
+            }
+        }
+
+        // พยายามสั่งเล่นเพลงทันทีที่โหลดหน้าเว็บ
+        window.addEventListener('DOMContentLoaded', function() {
+            music.volume = 0.8;
+            var playPromise = music.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    widget.classList.add('playing');
+                }).catch(function(error) {
+                    // ถ้าเบราว์เซอร์บล็อกการเล่นอัตโนมัติ จะเล่นทันทีเมื่อมีการคลิกหน้าจอครั้งแรก
+                    console.log("Autoplay blocked, waiting for user interaction.");
+                });
+            }
+        });
+
+        // ดักจับการคลิก/เลื่อนเมาส์ครั้งแรกเพื่อเล่นเพลงอัตโนมัติหากโดนเบราว์เซอร์บล็อก
+        ['click', 'keydown', 'touchstart'].forEach(function(evt) {
+            window.addEventListener(evt, function() {
+                if (music.paused) {
+                    music.play();
+                    widget.classList.add('playing');
+                }
+            }, { once: true });
+        });
+    </script>
+
+</body>
+</html>
