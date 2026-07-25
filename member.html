@@ -398,7 +398,7 @@
         <div class="header-section">
             <div class="title-group">
                 <h1 class="main-title">DERNYOUNGSAY</h1>
-                <div class="member-count"><span>41</span> MEMBERS</div>
+                <div class="member-count"><span id="totalMembersCount">0</span> MEMBERS</div>
             </div>
             <div class="top-controls">
                 <div class="search-box">
@@ -415,7 +415,7 @@
         <div class="category-section founder">
             <div class="category-header">
                 <div class="category-title">FOUNDER</div>
-                <div class="category-count"><span>1</span> MEMBER</div>
+                <div class="category-count"><span class="section-count">0</span> MEMBER</div>
             </div>
             <div class="member-grid">
                 <div class="member-card" data-name="nineny dernyoungsay">
@@ -437,7 +437,7 @@
         <div class="category-section leader">
             <div class="category-header">
                 <div class="category-title">LEADER</div>
-                <div class="category-count"><span>5</span> MEMBERS</div>
+                <div class="category-count"><span class="section-count">0</span> MEMBERS</div>
             </div>
             <div class="member-grid">
                 <div class="member-card" data-name="tail kodomo">
@@ -483,10 +483,9 @@
         <div class="category-section member">
             <div class="category-header">
                 <div class="category-title">MEMBER</div>
-                <div class="category-count"><span>35</span> MEMBERS</div>
+                <div class="category-count"><span class="section-count">0</span> MEMBERS</div>
             </div>
             <div class="member-grid">
-                <!-- เพิ่มชื่อ Jess Dernyoungsay เข้ามาที่นี่ -->
                 <div class="member-card" data-name="jess dernyoungsay">
                     <div class="member-info">
                         <div class="member-avatar">
@@ -751,20 +750,48 @@
                     </div>
                     <a href="https://www.facebook.com/share/1K8Mw5XKJL/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
-                <div class="member-card" data-name="min dernyoungsay">
-                    <div class="member-info">
-                        <div class="member-avatar">
-                            <img src="https://img2.pic.in.th/DYs.png" alt="Min Dernyoungsay">
-                        </div>
-                        <div class="member-details">
-                            <span class="member-name">Min Dernyoungsay</span>
-                            <span class="member-role">MEMBER</span>
-                        </div>
-                    </div>
-                    <a href="https://www.facebook.com/profile.php?id=61583563401297" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // ฟังก์ชันคำนวณและอัปเดตจำนวนสมาชิกทั้งหมดอัตโนมัติ
+        function updateMemberCounts() {
+            let total = 0;
+            const sections = document.querySelectorAll('.category-section');
+            
+            sections.forEach(section => {
+                const cards = section.querySelectorAll('.member-card');
+                const countSpan = section.querySelector('.section-count');
+                if (countSpan) {
+                    countSpan.textContent = cards.length;
+                }
+                total += cards.length;
+            });
+
+            const totalSpan = document.getElementById('totalMembersCount');
+            if (totalSpan) {
+                totalSpan.textContent = total;
+            }
+        }
+
+        // ฟังก์ชันค้นหาสมาชิก
+        function searchMembers() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.member-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                if (name.includes(input)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // รันฟังก์ชันนับจำนวนทันทีที่โหลดหน้าเว็บเสร็จ
+        window.addEventListener('DOMContentLoaded', updateMemberCounts);
+    </script>
 </body>
 </html>
