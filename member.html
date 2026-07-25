@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEMBERS - DERNYOUNGSAY</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/DYs.png">
-    <!-- นำเข้าฟอนต์ Google Fonts (Anton และ Outfit) -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>DERNYOUNGSAY</title>
+    <link rel="icon" type="image/png" href="https://img2.pic.in.th/DYs.png">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* --- SELECTION --- */
@@ -29,300 +27,825 @@
         }
 
         body, html {
-            height: 100%;
             width: 100%;
+            min-height: 100%;
             font-family: 'Outfit', sans-serif;
             color: #e0e0e0;
-            overflow: hidden;
-            /* พื้นหลังเดียวกันกับหน้าแรก */
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://img2.pic.in.th/bgdys.png') no-repeat center center fixed;
-            background-size: cover;
-            background-color: #0b0b0e;
+            background-color: #050507;
+            overflow-x: hidden;
         }
 
-        /* --- SCREEN HUD CORNER BORDERS --- */
-        .hud-border {
+        /* --- BACKGROUND ANIMATION --- */
+        .background-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 10;
-            border: 25px solid transparent;
-            opacity: 0;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background-color: #050507;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.2) contrast(1.15);
+            z-index: -1;
+            transform: scale(1.05);
+            animation: bgZoom 20s ease-in-out infinite alternate;
         }
 
-        .hud-border::before,
-        .hud-border::after,
-        .hud-corner-br {
-            content: '';
-            position: absolute;
-            width: 35px;
-            height: 35px;
-            border-color: rgba(255, 255, 255, 0.4);
-            border-style: solid;
+        @keyframes bgZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
         }
 
-        .hud-border::before {
-            top: 20px;
-            left: 20px;
-            border-width: 2px 0 0 2px;
-        }
-
-        .hud-border::after {
-            top: 20px;
-            right: 20px;
-            border-width: 2px 2px 0 0;
-        }
-
-        .hud-corner-br {
-            bottom: 20px;
-            right: 20px;
-            border-width: 0 2px 2px 0;
-        }
-
-        /* --- MAIN CONTENT CONTAINER --- */
-        .main-container {
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 30px 80px 30px;
             position: relative;
             z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-        }
-
-        /* --- ANIMATION CLASS --- */
-        .animate-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideUpFade {
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
+        /* --- HEADER SECTION --- */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 30px;
         }
 
-        /* --- TITLE --- */
-        .title-wrapper {
-            margin-bottom: 35px;
+        .title-group {
+            display: flex;
+            flex-direction: column;
         }
 
         .main-title {
             font-family: 'Anton', sans-serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             letter-spacing: 2px;
-            font-weight: 400;
-            margin-bottom: 0;
             color: #ffffff;
-            text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.1);
             text-transform: uppercase;
             line-height: 1;
-            animation-delay: 0.1s;
+            margin-bottom: 8px;
         }
 
-        /* --- MEMBER LIST BOX --- */
-        .member-box {
-            width: 420px;
-            max-width: 90%;
-            background: rgba(18, 18, 22, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            margin-bottom: 30px;
-            animation-delay: 0.2s;
+        .member-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #8c8c94;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
-        .member-list {
-            list-style: none;
-            max-height: 220px;
-            overflow-y: auto;
-            padding-right: 5px;
+        .member-count span {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-family: 'Anton', sans-serif;
+            margin-right: 4px;
         }
 
-        .member-list::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .member-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-        }
-
-        .member-item {
+        .top-controls {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 15px;
+        }
+
+        /* SEARCH BAR */
+        .search-box {
+            position: relative;
+            width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            background: rgba(18, 18, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 1px;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
-        .member-item:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .search-box input:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(25, 25, 32, 0.9);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8c8c94;
+            font-size: 0.9rem;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            background: rgba(18, 18, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION CATEGORIES --- */
+        .category-section {
+            margin-bottom: 45px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .category-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        /* สีประจำหัวข้อ */
+        .category-section.founder .category-title { color: #f39c12; border-left: 3px solid #f39c12; padding-left: 10px; }
+        .category-section.leader .category-title { color: #e74c3c; border-left: 3px solid #e74c3c; padding-left: 10px; }
+        .category-section.member .category-title { color: #3498db; border-left: 3px solid #3498db; padding-left: 10px; }
+
+        .category-count {
+            font-size: 0.85rem;
+            color: #8c8c94;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-count span {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.05rem;
+            color: #ffffff;
+            margin-right: 3px;
+        }
+
+        /* --- GRID CARDS (3 columns layout) --- */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .member-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: rgba(14, 14, 18, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            background: rgba(22, 22, 28, 0.9);
             border-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(3px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .member-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #1a1a20;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .member-card:hover .member-avatar img {
+            transform: scale(1.1);
+        }
+
+        .member-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
 
         .member-name {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: #ffffff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .member-name:hover {
-            color: #b0b0b8;
-            text-decoration: underline;
+            letter-spacing: 0.5px;
         }
 
         .member-role {
-            font-size: 0.75rem;
-            color: #b0b0b8;
+            font-size: 0.7rem;
+            color: #8c8c94;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-top: 3px;
+            font-weight: 500;
         }
 
-        /* --- BACK BUTTON --- */
-        .back-button-container {
-            display: flex;
-            justify-content: center;
-            animation-delay: 0.3s;
-        }
-
-        .back-button {
+        /* Social Link Button */
+        .social-link {
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 35px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            text-decoration: none;
-            color: #ffffff;
+            justify-content: center;
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            color: #b0b0b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
         }
 
-        .back-button:hover {
+        .social-link:hover {
             background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-3px) scale(1.02);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
-        .back-text {
-            font-size: 0.9rem;
+        /* --- FOOTER --- */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.75rem;
+            color: #707078;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
         }
 
-        .footer-text {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            color: #b0b0b8;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            z-index: 2;
-            white-space: nowrap;
-            opacity: 0;
-            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.4s;
-        }
-
-        .footer-text a {
+        .footer a {
             color: #ffffff;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .footer-text a:hover {
+        .footer a:hover {
             color: #b0b0b8;
             text-decoration: underline;
         }
 
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .member-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .top-controls {
+                width: 100%;
+                flex-direction: column;
+            }
+            .search-box {
+                width: 100%;
+            }
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+            }
             .main-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
-            .hud-border {
-                border-width: 10px;
-            }
-            .footer-text {
-                font-size: 0.55rem;
-                letter-spacing: 1.5px;
+            .member-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ขอบมุม HUD -->
-    <div class="hud-border">
-        <div class="hud-corner-br"></div>
+    <!-- พื้นหลัง -->
+    <div class="background-overlay"></div>
+
+    <!-- Background Audio (Autoplay, Loop, Synchronized state via localStorage) -->
+    <audio id="bgMusic" loop>
+        <source src="your-music-file.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="container">
+        
+        <!-- ส่วนหัวข้อและปุ่มย้อนกลับ -->
+        <div class="header-section">
+            <div class="title-group">
+                <h1 class="main-title">DERNYOUNGSAY</h1>
+                <div class="member-count"><span>36</span> MEMBERS</div>
+            </div>
+            <div class="top-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search members..." onkeyup="searchMembers()">
+                </div>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> BACK
+                </a>
+            </div>
+        </div>
+
+        <!-- หมวดหมู่: FOUNDER -->
+        <div class="category-section founder">
+            <div class="category-header">
+                <div class="category-title">FOUNDER</div>
+                <div class="category-count"><span>1</span> MEMBER</div>
+            </div>
+            <div class="member-grid">
+                <div class="member-card" data-name="Nineny dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Nineny Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Nineny Dernyoungsay</span>
+                            <span class="member-role">FOUNDER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=61592036620204" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- หมวดหมู่: LEADER -->
+        <div class="category-section leader">
+            <div class="category-header">
+                <div class="category-title">LEADER</div>
+                <div class="category-count"><span>5</span> MEMBERS</div>
+            </div>
+            <div class="member-grid">
+                <div class="member-card" data-name="tail kodomo">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Tail Kodomo">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Tail Kodomo</span>
+                            <span class="member-role">LEADER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/tail.kodomo" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="seefour dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Seefour Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Seefour Dernyoungsay</span>
+                            <span class="member-role">LEADER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/seefour.dernyoungsay" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="day dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Day Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Day Dernyoungsay</span>
+                            <span class="member-role">LEADER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/day.dernyoungsay" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- หมวดหมู่: MEMBER -->
+        <div class="category-section member">
+            <div class="category-header">
+                <div class="category-title">MEMBER</div>
+                <div class="category-count"><span>30</span> MEMBERS</div>
+            </div>
+            <div class="member-grid">
+                <div class="member-card" data-name="turk dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Turk Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Turk Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/trytome.bastien" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="layq dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Layq Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Layq Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/ArnoldXyen" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="saifah dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Saifah Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Saifah Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/tle.sws?locale=th_TH" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="loma dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Loma Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Loma Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1Z5v3nkGNk/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="real bestpart">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Real Bestpart">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Real Bestpart</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/19E85hcVX6/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="shiro dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Shiro Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Shiro Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=61576556919648" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="sanit dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Sanit Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Sanit Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/sanit.dernyoungsay?locale=th_TH" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="kyler dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Kyler Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Kyler Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/kyler.ghett" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="vetezx dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Vetezx Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Vetezx Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/VetexzDYS" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="loganz dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Loganz Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Loganz Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/Ganzdys" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="nongfirst dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Nongfirst Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Nongfirst Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1Eia8poThJ/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="wehha dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Wehha Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Wehha Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/kingsenv" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="sevenx dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Sevenx Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Sevenx Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1DsiRY557E/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="gene dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Gene Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Gene Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1Bn8R3saa9/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="snet dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="SNet Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">SNet Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/yippiee1" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="pig dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Pig Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Pig Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=61588442467705" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="est dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Est Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Est Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/est.wellesley/" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="cj noslee">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="CJ Noslee">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">CJ Noslee</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1BCjMPMcPU/" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="ice dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="ice Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">ice Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/Alpha.Wellesley" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="tail dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Tail Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Tail Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1K8Mw5XKJL/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="min dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Min Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Min Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=61583563406342" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="vega dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Vega Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Vega Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/1JTc7WDJpp/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="jim dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Jim Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Jim Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/banchamek.banchamek.banchamek.2025?locale=th_TH" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="aim dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Aim Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Aim Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/share/18rYdHaxYE/?mibextid=wwXIfr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <!-- เพิ่ม Member ใหม่ 2 คน -->
+                <div class="member-card" data-name="tim dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Tim Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Tim Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/tim.youngbxy" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="member-card" data-name="ronx dernyoungsay">
+                    <div class="member-info">
+                        <div class="member-avatar">
+                            <img src="https://img2.pic.in.th/DYs.png" alt="Ronx Dernyoungsay">
+                        </div>
+                        <div class="member-details">
+                            <span class="member-name">Ronx Dernyoungsay</span>
+                            <span class="member-role">MEMBER</span>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/rxnnylesbr" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- เนื้อหาหลัก -->
-    <div class="main-container">
-        <div class="title-wrapper animate-up">
-            <h1 class="main-title">MEMBERS</h1>
-        </div>
+    <script>
+        // ระบบซิงค์เพลงพื้นหลังเล่นต่อเนื่องจากหน้าหลักโดยไม่มีปุ่มควบคุม
+        document.addEventListener("DOMContentLoaded", function() {
+            const music = document.getElementById("bgMusic");
+            
+            // ดึงค่าเวลาเล่นเพลงล่าสุดจาก localStorage
+            let savedTime = localStorage.getItem("bgMusicTime");
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
 
-        <!-- กล่องรายชื่อสมาชิก -->
-        <div class="member-box animate-up">
-            <ul class="member-list">
-                <li class="member-item">
-                    <a href="https://www.facebook.com/tim.youngbxy" target="_blank" class="member-name">
-                        Tim Dernyoungsay
-                    </a>
-                    <span class="member-role">MEMBER</span>
-                </li>
-                <li class="member-item">
-                    <a href="https://www.facebook.com/rxnnylesbr" target="_blank" class="member-name">
-                        Ronx Dernyoungsay
-                    </a>
-                    <span class="member-role">MEMBER</span>
-                </li>
-            </ul>
-        </div>
+            // พยายามเล่นเพลงอัตโนมัติ
+            music.play().catch(error => {
+                console.log("Autoplay was prevented, waiting for interaction.");
+            });
 
-        <!-- ปุ่มกลับหน้าแรก -->
-        <div class="back-button-container animate-up">
-            <a href="./" class="back-button">
-                <i class="fas fa-arrow-left"></i>
-                <span class="back-text">BACK TO HOME</span>
-            </a>
-        </div>
-    </div>
+            // บันทึกตำแหน่งเวลาเพลงทุกๆ วินาที
+            setInterval(() => {
+                if (!music.paused) {
+                    localStorage.setItem("bgMusicTime", music.currentTime);
+                }
+            }, 1000);
 
-    <!-- ส่วนท้าย -->
-    <div class="footer-text">©2026 ORIGINAL DESIGN BY <a href="https://discord.gg/PrR76kP6nE" target="_blank">DERNYOUNGSAY</a></div>
+            // บันทึกก่อนเปลี่ยนหน้า
+            window.addEventListener("beforeunload", () => {
+                localStorage.setItem("bgMusicTime", music.currentTime);
+            });
+        });
 
+        // ฟังก์ชันค้นหา Member
+        function searchMembers() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.member-card');
+
+            cards.forEach(card => {
+                let name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
